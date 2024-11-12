@@ -47,11 +47,3 @@ function blind() {
 
     window.location.href = 'gamemodes/blind/Level01/index.html';
 }
-
-// Oh
-function babyMode() {
-    alert("...")
-    alert("You can't even spell 'Oh'");
-
-    window.location.href = 'gamemodes/baby/Level01/index.html';
-}
