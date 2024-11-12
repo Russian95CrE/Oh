@@ -38,27 +38,6 @@ function doubleSpeed() {
     window.location.href = 'gamemodes/doubleSpeed/Level01/index.html';
 }
 
-function lazy() {
-    alert("...");
-    alert("why... WHY THIS GAMEMODE?");
-    alert("ok, you got it");
-
-    // Oh my fucking god...
-    const input = prompt("just type 'yes' and you will be redirected to the game mode");
-
-    const inputLowerCase = input.toLowerCase();
-
-    if (inputLowerCase === "yes") {
-        window.location.href = 'gamemodes/lazy/Level01/index.html';
-    } else if (inputLowerCase === "no") {
-        alert("are you stupid or something?");
-        alert("now fuck it on");
-        alert("dumb shit you are");
-    } else {
-        alert("...");
-    }
-}
-
 // I am not blind
 function blind() {
     alert("...");
