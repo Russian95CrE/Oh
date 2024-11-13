@@ -110,6 +110,11 @@ function drawPlayer() {
     ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
+function itStarts() {
+    alert("It starts with one!");
+    window.location.href = "https://www.youtube.com/watch?v=eVTXPUF4Oz4";
+}
+
 // Handle player movement
 function handleMovement() {
 
