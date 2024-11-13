@@ -1,3 +1,4 @@
+/* Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,27 +7,31 @@
 
 body {
     font-family: 'JetBrains Mono', monospace;
-    background-color: #808080;
+    background-color: #cbceb6;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    transition: background-color 0.5s ease;
 }
 
 .container {
     text-align: left;
-    color: black;
+    max-width: 600px;
+    padding: 80px;
+    background-color: #c5c5aa;
+    border-radius: 10px;
 }
 
 .logo img {
-    width: 80px;
+    width: 100px;
     height: auto;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     animation: fadeIn 1s ease-in-out;
 }
 
 .menu {
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 .menu ul {
@@ -34,18 +39,18 @@ body {
 }
 
 .menu ul li {
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
 .menu ul li a {
     text-decoration: none;
-    font-size: 24px;
-    color: black;
+    font-size: 20px;
+    color: #000000;
     transition: color 0.3s, transform 0.3s;
 }
 
 .menu ul li a:hover {
-    color: white;
+    color: #ffffff;
     transform: translateX(10px);
 }
 
@@ -56,21 +61,32 @@ body {
 }
 
 .footer a {
-    color: black;
+    color: #000000;
     text-decoration: none;
 }
 
 .footer a:hover {
-    color: white;
+    color: #ffffff;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(-10px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .menu ul li a {
+        font-size: 18px;
     }
 }

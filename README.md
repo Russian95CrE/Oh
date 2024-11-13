@@ -1,38 +1,38 @@
 # 🎮 Oh - A Prank Game 🎮
 
-Welcome to **Oh**, the game that's more about, uh, than winning! 😆 This little prank of a game was whipped up in **just 24 hours** by **Russian95CrE**, **isaquemota**, and **proxyxl**. So yeah, don't expect a masterpiece—just some fun chaos! 🤪
+Welcome to **Oh**, the game that's more about fun than winning! 😆 Developed in just **24 hours** by **Russian95CrE**, **isaquemota**, and **proxyxl**, this game is a delightful chaos of speedrunning excitement. 🤪
 
 ## 🚀 What's the Point? 🚀
-Well, that's the thing... "Oh" is a game that **doesn’t take itself too seriously**. It was made for **speedrunning**, so if you're into that, go ahead and see if you can beat it faster than anyone else! 🏁💨
+"Oh" is a game that **doesn’t take itself too seriously**. Designed for **speedrunning**, it challenges you to beat it faster than anyone else! 🏁💨
 
-This game is *all about simple, fast, and frustrating fun*! Think you can keep your cool? 😤 
+This game is all about simple, fast, and frustrating fun! Think you can keep your cool? 😤 
 
 ## 🔗 Play it Now!
 👉 [Click here to play](https://russian95cre.github.io/Oh) 👈  
 No downloads, no installs, just jump in and start playing! 🎉
 
 ## 🎮 How to Play
-The controls couldn’t be simpler! Here's how you navigate through the **chaos**:
+Navigate through the chaos with these simple controls:
 
 - **⬅️ Move Left:** `ArrowLeft`
 - **➡️ Move Right:** `ArrowRight`
 - **⬆️ Jump:** `ArrowUp`
 
-Yep, that’s literally it. 🕹️ Master the basics and see how fast you can finish—or if you can even finish at all! 😜
+Master the basics and see how fast you can finish—or if you can even finish at all! 😜
 
 ## 🌟 Why Isaque is Key to "Oh" 🌟
-Let’s take a moment to appreciate **isaquemota**—without him, this game wouldn’t exist as it does today! 🙌
+A round of applause for **isaquemota**—without him, this game wouldn’t exist as it does today! 🙌
 
 - **Speedrunner Extraordinaire**: Isaque isn’t just one of the creators, he's also the **first to conquer the hardest mode** of the game—beating it with just **1 life**! 🏆
-- **Level Design Wizard**: He played a huge role in shaping the **level design**, making sure it’s tricky enough to challenge you but fun enough to keep you coming back for more! 🎮
-- **Game Modes Genius**: The unique and challenging game modes, like **Double Speed**, **1 Life**, and **Blind**, are all thanks to Isaque’s creativity. These modes keep the game fresh and make for some wild speedrunning experiences! ⚡🕶️
-- **Heart of the Project**: Honestly, without Isaque’s creativity, speedrunning skills, and design input, **Oh** wouldn’t be nearly as chaotic and fun as it is now! 
+- **Level Design Wizard**: He shaped the **level design**, ensuring it's tricky enough to challenge you but fun enough to keep you coming back! 🎮
+- **Game Modes Genius**: The unique and challenging game modes, like **Double Speed**, **1 Life**, and **Blind**, are all thanks to Isaque’s creativity. ⚡🕶️
+- **Heart of the Project**: Without Isaque’s creativity, speedrunning skills, and design input, **Oh** wouldn’t be nearly as chaotic and fun! 
 
 So, if you're having a blast (or feeling the frustration) while playing—thank Isaque for that! 🙏🔥
 
 ## 🌟 Why Play? 🌟
 - **Super simple** controls!
-- Perfect for **speedrunners** who want a challenge!
+- Perfect for **speedrunners** looking for a challenge!
 - It's a **prank**—so have fun with it and don't take it too seriously! 😎
 - Built with ❤️ in just **24 hours**!
 
@@ -41,7 +41,13 @@ So, if you're having a blast (or feeling the frustration) while playing—thank 
 - **isaquemota** (**The Goat**)
 - **proxyxl**
 
-Three creative minds, one chaotic game. 🎨💡
+Three creative minds came together to bring you this whirlwind of fun. Enjoy the chaos!
+
+## 🛠️ Getting Started
+- **Tips for New Players**: Start slow to get a feel for the controls, then ramp up your speed as you get more comfortable.
+
+## 🤝 Contributing
+We welcome feedback and contributions! If you have ideas or improvements, feel free to reach out to the creators.
 
 ---
 

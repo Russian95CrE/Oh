@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>oh...</title>
-    <link rel="stylesheet" href="menuResources/modes/resource/style.css" />
+    <link rel="stylesheet" href="assets/modes/resource/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,33 +15,19 @@
   <body>
     <div class="container">
       <div class="logo">
-        <img src="menuResources/modes/resource/icon.png" alt="Logo" />
+        <img src="assets/modes/resource/icon.png" alt="Logo" />
       </div>
-      <div class="menu">
+      <nav class="menu" aria-label="Game Mode Selection">
         <ul>
-          <li>
-            <a href="gamemodes/classic/Level01/index.html">classic mode</a>
-          </li>
-          <li>
-            <a href="#" onclick="impossibleChallenge()">impossible challenge</a>
-          </li>
-          <li>
-            <a href="#" onclick="oneLife()">1 life</a>
-          </li>
-          <li>
-            <a href="#" onclick="doubleSpeed()">double speed</a>
-          </li>
-          <li>
-            <a href="#" onclick="blind()">blind</a>
-          </li>
-          <li>
-            <a href="gamemodes/baby/Level01/index.html">baby mode</a>
-          </li>
-          <li>
-            <a href="gamemodes/lazy/Level01/index.html">lazy mode</a>
-          </li>
+          <li><a href="gamemodes/classic/Level01/index.html">Classic Mode</a></li>
+          <li><a href="#" onclick="impossibleChallenge()">Impossible Challenge</a></li>
+          <li><a href="#" onclick="oneLife()">1 Life</a></li>
+          <li><a href="#" onclick="doubleSpeed()">Double Speed</a></li>
+          <li><a href="#" onclick="blind()">Blind</a></li>
+          <li><a href="gamemodes/baby/Level01/index.html">Baby Mode</a></li>
+          <li><a href="gamemodes/lazy/Level01/index.html">Lazy Mode</a></li>
         </ul>
-      </div>
+      </nav>
       <div class="footer">
         <p>
           do you like oh? because me too! try join in the
@@ -49,10 +35,10 @@
         </p>
       </div>
       <div class="version">
-        <p style="font-weight: bold">v1.0.4.2 (i am too lazy...)</p>
+        <p style="font-weight: bold">v1.0.5 (menu update)</p>
       </div>
     </div>
 
-    <script src="menuResources/modes/resource/script.js"></script>
+    <script src="assets/modes/resource/script.js"></script>
   </body>
 </html>
