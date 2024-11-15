@@ -1,6 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const params = new URLSearchParams(window.location.search);
+
 // Player properties
 let player = {
     x: 700,
@@ -8,7 +10,7 @@ let player = {
     width: 22,
     height: 40,
     speed: 10,
-    color: 'black',
+    color: params.get('color'),
     velocityX: 0,
     velocityY: 0,
     isJumping: false,
@@ -110,6 +112,11 @@ function drawPlayer() {
     ctx.fillRect(player.x, player.y, player.width, player.height);
 }
 
+function itStarts() {
+    alert("It starts with one!");
+    window.location.href = "https://www.youtube.com/watch?v=eVTXPUF4Oz4";
+}
+
 // Handle player movement
 function handleMovement() {
 
@@ -185,7 +192,7 @@ function handleMovement() {
                     winTime = time;
                     door_sound.play();
 					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level10/index.html";
+                    window.location.href = "Level10/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {

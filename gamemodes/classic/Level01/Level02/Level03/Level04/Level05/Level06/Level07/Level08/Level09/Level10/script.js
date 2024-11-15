@@ -1,6 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const params = new URLSearchParams(window.location.search);
+
 // Player properties
 let player = {
     x: 700,
@@ -8,7 +10,7 @@ let player = {
     width: 22,
     height: 40,
     speed: 5,
-    color: 'black',
+    color: params.get('color'),
     velocityX: 0,
     velocityY: 0,
     isJumping: false,
@@ -179,7 +181,7 @@ function handleMovement() {
         }
 
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 6) {
-            window.location.href = "Level01_/index.html";
+            window.location.href = "Level01_/index.html?color=" + player.color;
         }
     });
 

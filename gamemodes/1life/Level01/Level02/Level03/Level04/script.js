@@ -1,6 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const params = new URLSearchParams(window.location.search);
+
 // Player properties
 let player = {
     x: 50,
@@ -8,7 +10,7 @@ let player = {
     width: 22,
     height: 40,
     speed: 5,
-    color: 'black',
+    color: params.get('color'),
     velocityX: 0,
     velocityY: 0,
     isJumping: false,
@@ -184,7 +186,7 @@ function handleMovement() {
                     winTime = time;
                     door_sound.play();
 					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level05/index.html";
+                    window.location.href = "Level05/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {

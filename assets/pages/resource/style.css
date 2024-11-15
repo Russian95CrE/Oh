@@ -56,7 +56,7 @@ body {
 
 .footer {
     margin-top: 50px;
-    font-size: 14px;
+    font-size: 18px;
     text-align: left;
 }
 
@@ -67,6 +67,32 @@ body {
 
 .footer a:hover {
     color: #ffffff;
+}
+
+.github-button-russian95 {
+    font-family: "JetBrains Mono";
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.github-button-isaque {
+    font-family: "JetBrains Mono";
+    font-size: 15px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 @keyframes fadeIn {
