@@ -212,7 +212,11 @@ function handleMovement() {
 
 
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
-            time += 0.010;
+            if (time >= 100.200) {
+                time = 100.000;
+            } else {
+                time += 0.010;
+            }
         }
     });
 
