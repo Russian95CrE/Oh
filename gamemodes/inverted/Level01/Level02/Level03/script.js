@@ -5,7 +5,7 @@ const params = new URLSearchParams(window.location.search);
 
 // Player properties
 let player = {
-    x: 50,
+    x: 730,
     y: 520,
     width: 22,
     height: 40,
@@ -22,8 +22,7 @@ let player = {
     alerted: false,
     canMoveX: true,
     canMoveY: true,
-    timePassed: false,
-    died: true
+    timePassed: false
 }
 
 // Game variables
@@ -39,28 +38,29 @@ var door_sound = new Audio('resource/door.wav');
 
 // Define the level as a grid (2D array) of tiles
 
-// 1 - Wall
+// 1 - Wall (Plataforma)
 // 2 - Door
 // 3 - Key
-// 4 - Spike
 
 const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 4, 0, 4, 2],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] // Ground row
+    [1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  // Ground row
 ];
+
+
 
 // Function to generate platforms from the level array
 function createPlatformsFromLevel() {
@@ -97,9 +97,6 @@ function drawPlatforms() {
                     ctx.fillStyle = '#E2E200'; // Color for key
                     ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
-            } else if (level[row][col] === 4) {
-                ctx.fillStyle = '#FF6A00'; // Color for Spike
-                ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }
     }
@@ -185,8 +182,8 @@ function handleMovement() {
                     // Win the game
                     winTime = time;
                     door_sound.play();
-					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level03/index.html?color=" + player.color;
+					alert('!now dna yek eht htiw rood eht dekcolnU uoY !boj taerG');
+                    window.location.href = "Level04/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
@@ -197,15 +194,6 @@ function handleMovement() {
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 3) {
             shakeGameContainer()
             player.hasKey = true;
-        }
-
-        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
-            if (player.died) {
-                window.location.href = "https://russian95cre.github.io/Oh/gamemodes/1life/Level01/index.html?color=" + player.color;
-            
-                player.died = false;
-            }
-
         }
     });
 

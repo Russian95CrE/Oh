@@ -212,7 +212,7 @@ function handleMovement() {
 
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 5) {
             if (player.died) {
-                window.location.href = "https://russian95cre.github.io/Oh/gamemodes/1life/Level01/index.html"
+                window.location.href = "https://russian95cre.github.io/Oh/gamemodes/1life/Level01/index.html?color=" + player.color;
             
                 player.died = false;
             }

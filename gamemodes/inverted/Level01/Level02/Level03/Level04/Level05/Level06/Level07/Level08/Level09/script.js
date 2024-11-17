@@ -5,7 +5,7 @@ const params = new URLSearchParams(window.location.search);
 
 // Player properties
 let player = {
-    x: 50,
+    x: 700,
     y: 520,
     width: 22,
     height: 40,
@@ -22,14 +22,13 @@ let player = {
     alerted: false,
     canMoveX: true,
     canMoveY: true,
-    timePassed: false,
-    died: true
+    timePassed: false
 }
 
 // Game variables
 let keys = {};
 let isPaused = false;
-let time = 10.000;
+let time = 50.000;
 let winTime = 0.000;
 const tileSize = 40; // Define the size of each "tile"
 
@@ -39,28 +38,30 @@ var door_sound = new Audio('resource/door.wav');
 
 // Define the level as a grid (2D array) of tiles
 
-// 1 - Wall
+// 1 - Wall (Plataforma)
 // 2 - Door
 // 3 - Key
-// 4 - Spike
+// 4 - Time Gain 
 
 const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 4, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4, 0, 0, 4, 0, 4, 2],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
+    [5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] // Ground row
 ];
+
+
 
 // Function to generate platforms from the level array
 function createPlatformsFromLevel() {
@@ -98,7 +99,7 @@ function drawPlatforms() {
                     ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
             } else if (level[row][col] === 4) {
-                ctx.fillStyle = '#FF6A00'; // Color for Spike
+                ctx.fillStyle = '#FF0000'; // Color for time lose block
                 ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }
@@ -109,6 +110,11 @@ function drawPlatforms() {
 function drawPlayer() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
+}
+
+function itStarts() {
+    alert("It starts with one!");
+    window.location.href = "https://www.youtube.com/watch?v=eVTXPUF4Oz4";
 }
 
 // Handle player movement
@@ -185,8 +191,8 @@ function handleMovement() {
                     // Win the game
                     winTime = time;
                     door_sound.play();
-					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level03/index.html?color=" + player.color;
+					alert('!now dna yek eht htiw rood eht dekcolnU uoY !boj taerG');
+                    window.location.href = "Level10/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
@@ -195,17 +201,17 @@ function handleMovement() {
         }
 
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 3) {
-            shakeGameContainer()
-            player.hasKey = true;
+            time -= 0.015;
         }
 
-        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
-            if (player.died) {
-                window.location.href = "https://russian95cre.github.io/Oh/gamemodes/1life/Level01/index.html?color=" + player.color;
-            
-                player.died = false;
-            }
 
+        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
+            time -= 0.015;
+        }
+
+        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 5) {
+            shakeGameContainer();
+            player.hasKey = true;
         }
     });
 
