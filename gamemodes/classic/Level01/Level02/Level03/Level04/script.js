@@ -183,7 +183,7 @@ function handleMovement() {
                     winTime = time;
                     door_sound.play();
 					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level05/index.html";
+                    window.location.href = "Level05/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
