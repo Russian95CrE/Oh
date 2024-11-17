@@ -34,7 +34,7 @@ function blind() {
     window.location.href = 'gamemodes/blind/Level01/index.html';
 }
 
-// This function initiates the invisible challenge mode
+// This function initiates the inverted challenge mode
 function inverted() {
     alert("Classic inverted.");
     window.location.href = 'gamemodes/inverted/Level01/index.html';
