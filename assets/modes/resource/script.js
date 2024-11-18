@@ -36,6 +36,11 @@ function blind() {
     window.location.href = 'gamemodes/blind/Level01/index.html';
 }
 
+function doubleJump() {
+    alert("Get ready for double jump mode!");
+    window.location.href = 'gamemodes/doubleJump/Level01/index.html?color=' + color;
+}
+
 // This function initiates the inverted challenge mode
 function inverted() {
     alert("Classic inverted.");
