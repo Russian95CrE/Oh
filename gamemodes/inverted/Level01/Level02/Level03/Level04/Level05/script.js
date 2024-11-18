@@ -187,7 +187,7 @@ function handleMovement() {
                     winTime = time;
                     door_sound.play();
 					alert('!now dna yek eht htiw rood eht dekcolnU uoY !boj taerG');
-                    window.location.href = "Level06/index.html";
+                    window.location.href = "Level06/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
