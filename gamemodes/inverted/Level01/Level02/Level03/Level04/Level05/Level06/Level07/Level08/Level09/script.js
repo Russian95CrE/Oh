@@ -5,7 +5,7 @@ const params = new URLSearchParams(window.location.search);
 
 // Player properties
 let player = {
-    x: 700,
+    x: 70,
     y: 520,
     width: 22,
     height: 40,
