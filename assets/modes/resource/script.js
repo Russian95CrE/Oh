@@ -24,6 +24,11 @@ function oneLife() {
     }
 }
 
+function cooldown() {
+    alert("fuck you");
+    window.location.href = 'gamemodes/cooldownJump/Level01/index.html?color=' + color;
+}
+
 // This function initiates the double speed challenge mode
 function doubleSpeed() {
     alert("wait...");
