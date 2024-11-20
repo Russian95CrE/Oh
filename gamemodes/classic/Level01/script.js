@@ -68,6 +68,19 @@ leftButton.classList.add('button-container');
 
 rightButton.classList.add('button-container2');
 
+const handleResize = () => {
+    if (window.innerWidth <= 768) {
+      // Apply styles for screens with a maximum width of 768px
+      document.body.style.width = '100%';
+      document.body.style.height = '100vh';
+      // Apply other styles for elements as needed
+      document.querySelector('h1').style.fontSize = '20px';
+    }
+  };
+  
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Call the function initially to apply the styles
+
 // Player properties
 let player = {
     x: 50,
