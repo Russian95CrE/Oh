@@ -29,6 +29,11 @@ function cooldown() {
     window.location.href = 'gamemodes/cooldownJump/Level01/index.html?color=' + color;
 }
 
+function invisible() {
+    alert("haha you are funny");
+    window.location.href = 'gamemodes/invisible/Level01/index.html'
+}
+ 
 // This function initiates the double speed challenge mode
 function doubleSpeed() {
     alert("wait...");
