@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
+<<<<<<< HEAD
 //mobile support
 document.addEventListener("touchstart", function(event) {
     if(event.touches.length == 1) {
@@ -68,6 +69,8 @@ leftButton.classList.add('button-container');
 
 rightButton.classList.add('button-container2');
 
+=======
+>>>>>>> parent of 523288c (Added Mobile Support)
 // Player properties
 let player = {
     x: 50,
