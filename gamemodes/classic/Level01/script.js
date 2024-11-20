@@ -3,6 +3,31 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
+//mobile support
+document.addEventListener("touchstart", function(event) {
+    if(event.touches.length == 1) {
+        event.preventDefault();
+        var touch = event.touches[0];
+        var x = touch.pageX;
+        var y = touch.pageY;
+        if(x < window.innerWidth/3) {
+            keys['ArrowLeft'] = true;
+        } else if(x > window.innerWidth*2/3) {
+            keys['ArrowRight'] = true;
+        } else {
+            keys['ArrowUp'] = true;
+        }
+    }
+}, false);
+
+document.addEventListener("touchend", function(event) {
+    if(event.touches.length == 0) {
+        keys['ArrowLeft'] = false;
+        keys['ArrowRight'] = false;
+        keys['ArrowUp'] = false;
+    }
+}, false);
+
 const leftButton = document.createElement('Button');
 leftButton.innerHTML = 'Left';
 document.body.appendChild(leftButton);
