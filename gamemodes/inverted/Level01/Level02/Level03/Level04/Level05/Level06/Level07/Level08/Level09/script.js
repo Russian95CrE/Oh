@@ -3,6 +3,46 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
+const leftButton = document.createElement('Button');
+leftButton.innerHTML = 'Left';
+document.body.appendChild(leftButton);
+
+const rightButton = document.createElement('Button');
+rightButton.innerHTML = 'Right';
+document.body.appendChild(rightButton);
+
+const jumpButton = document.createElement('Button');
+jumpButton.innerHTML = 'Jump';
+document.body.appendChild(jumpButton);
+
+leftButton.addEventListener('mousedown', () => {
+    keys['ArrowLeft'] = true;
+});
+
+leftButton.addEventListener('mouseup', () => {
+    keys['ArrowLeft'] = false;
+});
+
+rightButton.addEventListener('mousedown', () => {
+    keys['ArrowRight'] = true;
+});
+
+rightButton.addEventListener('mouseup', () => {
+    keys['ArrowRight'] = false;
+});
+
+jumpButton.addEventListener('mousedown', () => {
+    keys['ArrowUp'] = true;
+});
+
+jumpButton.addEventListener('mouseup', () => {
+    keys['ArrowUp'] = false;
+});
+
+leftButton.classList.add('button-container');
+
+rightButton.classList.add('button-container2');
+
 // Player properties
 let player = {
     x: 70,
