@@ -4,22 +4,6 @@
     box-sizing: border-box;
 }
 
-@media only screen and (max-width: 768px) {
-    /* CSS rules for screens with a maximum width of 768px */
-    body {
-      width: 100%;
-      height: 100vh;
-    }
-    
-    /* Adjust other elements as needed */
-    /* For example, you can set the font size to be smaller for better readability */
-    h1 {
-      font-size: 20px;
-    }
-    
-    /* Add more CSS rules for other elements as needed */
-  }
-
 .button-container {
     position: absolute;
     top: 300px;
