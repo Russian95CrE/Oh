@@ -3,6 +3,9 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
+// Reality check for programmers =D
+let total_hours_wasted_here = 1;
+
 // Player properties
 let player = {
     x: 50,
