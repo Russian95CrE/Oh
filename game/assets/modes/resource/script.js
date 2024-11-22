@@ -10,11 +10,16 @@ function classic() {
 function impossibleChallenge() {
     const userResponse = prompt("are you sure you want to start? type 'Yes, I will cry like a baby'");
 
-    // TODO fix this please too
-    if (userResponse && userResponse.toLowerCase() === "yes, i will cry like a baby") {
-        window.location.href = 'gamemodes/impossible_challenge/Level01/index.html?color=' + color;
+    if (userResponse) {
+        const sanitizedResponse = userResponse.trim().toLowerCase();
+    
+        if (sanitizedResponse === "yes, i will cry like a baby") {
+            window.location.href = 'gamemodes/impossible_challenge/Level01/index.html?color=' + color;
+        } else {
+            alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+        }
     } else {
-        alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+        alert("Please provide a response.");
     }
 }
 
@@ -22,13 +27,18 @@ function impossibleChallenge() {
 function oneLife() {
     const userResponse = prompt("Are you sure? (type 'yes' 15 times)");
 
-    // TODO fix this please
-    if (userResponse && userResponse.replace(/\s/g, '').toLowerCase() === "yes".repeat(15)) {
-        window.location.href = 'gamemodes/1life/Level01/index.html?color=' + color;
-    } else if (userResponse && userResponse.toLowerCase() === "no") {
-        alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+    if (userResponse) {
+        const sanitizedResponse = userResponse.replace(/\s/g, '').toLowerCase();
+    
+        if (sanitizedResponse === "yes".repeat(15)) {
+            window.location.href = 'gamemodes/1life/Level01/index.html?color=' + color;
+        } else if (sanitizedResponse === "no") {
+            alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+        } else {
+            alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+        }
     } else {
-        alert("your mom doesn't love you, your dad left you, your grandma hates you, and you're gonna grow up to become Adam Sandler.");
+        alert("Please provide a response.");
     }
 }
 
