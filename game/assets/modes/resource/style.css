@@ -23,6 +23,14 @@ body {
     border-radius: 10px;
 }
 
+.container_hard {
+    text-align: left;
+    max-width: 600px;
+    padding: 80px;
+    background-color: #c5c5aa;
+    border-radius: 10px;
+}
+
 .logo img {
     width: 100px;
     height: auto;

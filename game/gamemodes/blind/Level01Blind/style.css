@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ccc; /* Cor de fundo similar à imagem do nível */
+}
+
+.game-container {
+    position: relative;
+    text-align: center;
+}
+
+@keyframes shake {
+    0% { transform: translate(0); }
+    25% { transform: translate(-50px, 0px); }
+    50% { transform: translate(50px, 0px); }
+    75% { transform: translate(-50px, 0px); }
+    100% { transform: translate(0); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+
+canvas {
+    background-color: #000000; /* Fundo do canvas combinando com a área do jogo */
+    display: block;
+    margin: 0 auto;
+    border: none; /* Remover a borda do canvas */
+}
+
+.game-info {
+    margin-top: 20px;
+}
+
+#paused {
+    display: none;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+p {
+    font-size: 18px;
+    color: black;
+}

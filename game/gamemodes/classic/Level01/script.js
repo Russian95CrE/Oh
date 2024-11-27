@@ -29,6 +29,9 @@ let player = {
 }
 
 // Game variables
+if (params.get('powerup') === 'true') {
+    player.speed = 6;
+}
 let keys = {};
 let isPaused = false;
 let time = 10.000;
