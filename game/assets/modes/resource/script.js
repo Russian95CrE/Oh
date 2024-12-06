@@ -13,7 +13,7 @@ function multiplayer() {
 }
 
 //  ̄\_(ツ)_/ ̄ (MultiPlayer Hard)
-function multiplayer() {
+function multiplayerHard() {
     alert("fuck you, you are not playing multiplayerhard");
 }
 
