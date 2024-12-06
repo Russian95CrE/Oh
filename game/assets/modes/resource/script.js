@@ -6,6 +6,17 @@ function classic() {
     window.location.href = 'gamemodes/classic/Level01/index.html?color=' + color;
 }
 
+//  ̄\_(ツ)_/ ̄ (MultiPlayer)
+function multiplayer() {
+    alert("let's play together!");
+    window.location.href = 'gamemodes/multiplayer/Level01/index.html';
+}
+
+//  ̄\_(ツ)_/ ̄ (MultiPlayer Hard)
+function multiplayer() {
+    alert("fuck you, you are not playing multiplayerhard");
+}
+
 // idk
 function Level01Plus() {
     alert("classic. hard...");
