@@ -52,7 +52,7 @@ let player2 = {
 // Game variables
 let keys = {};
 let isPaused = false;
-let time = 10.000;
+let time = 3.100;
 let winTime = 0.000;
 const tileSize = 40; // Define the size of each "tile"
 

@@ -52,7 +52,7 @@ let player2 = {
 // Game variables
 let keys = {};
 let isPaused = false;
-let time = 9.500;
+let time = 4.000;
 let winTime = 0.000;
 const tileSize = 40; // Define the size of each "tile"
 
@@ -111,11 +111,11 @@ function drawPlatforms() {
                 ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             } else if (level[row][col] === 3) {
                 if (!player.timePassed) {
-                    ctx.fillStyle = '#E2E200'; // Color for key
+                    ctx.fillStyle = '#FF0000'; // Color for key
                     ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
             } else if (level[row][col] === 4) {
-                ctx.fillStyle = '#FF0000'; // Color for time lose block
+                ctx.fillStyle = '#E2E200'; // Color for time lose block
                 ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }
