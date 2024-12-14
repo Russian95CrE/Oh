@@ -3,9 +3,6 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
-// Reality check for programmers =D
-let total_hours_wasted_here = 1;
-
 // Player properties
 let player = {
     x: 50,
@@ -36,30 +33,29 @@ let winTime = 0.000;
 const tileSize = 40; // Define the size of each "tile"
 
 var jump = new Audio('resource/jump.wav');
-var shake = new Audio('resource/shake.wav');
-var door_sound = new Audio('resource/door.wav');
 
 // Define the level as a grid (2D array) of tiles
 
 // 1 - Wall
 // 2 - Door
 // 3 - Key
+// 4 - Teleport
 
 const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 4],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] // Ground row
 ];
 
@@ -176,25 +172,8 @@ function handleMovement() {
             }
         }
 
-        // Check collision with the special tile (2)
-        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 2) {
-            if (player.hasKey) {
-                if (!player.alerted) {
-                    // Win the game
-                    winTime = time;
-                    door_sound.play();
-					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level02/index.html?color=" + player.color;
-                    player.alerted = true; // Prevent further alerts
-                }
-            } else {
-                shakeGameContainer();
-            }
-        }
-
-        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 3) {
-            shakeGameContainer()
-            player.hasKey = true;
+        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
+            window.location.href = 'Final/index.html';
         }
     });
 
@@ -204,8 +183,6 @@ function handleMovement() {
         jump.play();
         player.isJumping = true;
     }
-
-
 
 
     // Prevent player from falling below the canvas
@@ -220,10 +197,7 @@ function handleMovement() {
 // Function to shake the game container
 function shakeGameContainer() {
     const gameContainer = document.querySelector('.game-container');
-
     gameContainer.classList.add('shake');
-
-    shake.play();
 
     // Remove the shake class after the animation is complete
     setTimeout(() => {

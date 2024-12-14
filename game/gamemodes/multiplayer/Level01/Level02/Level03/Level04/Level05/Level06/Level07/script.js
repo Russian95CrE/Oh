@@ -3,12 +3,9 @@ const ctx = canvas.getContext('2d');
 
 const params = new URLSearchParams(window.location.search);
 
-// Reality check for programmers =D
-let total_hours_wasted_here = 1;
-
 // Player properties
 let player = {
-    x: 50,
+    x: 700,
     y: 520,
     width: 22,
     height: 40,
@@ -31,7 +28,7 @@ let player = {
 // Game variables
 let keys = {};
 let isPaused = false;
-let time = 10.000;
+let time = 50.000;
 let winTime = 0.000;
 const tileSize = 40; // Define the size of each "tile"
 
@@ -41,9 +38,10 @@ var door_sound = new Audio('resource/door.wav');
 
 // Define the level as a grid (2D array) of tiles
 
-// 1 - Wall
+// 1 - Wall (Plataforma)
 // 2 - Door
 // 3 - Key
+// 4 - Time Gain 
 
 const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -52,16 +50,18 @@ const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] // Ground row
 ];
+
+
 
 // Function to generate platforms from the level array
 function createPlatformsFromLevel() {
@@ -98,6 +98,17 @@ function drawPlatforms() {
                     ctx.fillStyle = '#E2E200'; // Color for key
                     ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
                 }
+
+                if (player.hasTimeGain) {
+                    ctx.fillStyle = '#E2E200'; // Color for key
+                    ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+                } else {
+                    ctx.fillStyle = '#808080'; // Color for key
+                    ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+                }
+            } else if (level[row][col] === 4) {
+                ctx.fillStyle = '#7F6A00'; // Color for time lose block
+                ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
             }
         }
     }
@@ -184,7 +195,7 @@ function handleMovement() {
                     winTime = time;
                     door_sound.play();
 					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level02/index.html?color=" + player.color;
+                    window.location.href = "Level08/index.html?color=" + player.color;
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
@@ -193,8 +204,19 @@ function handleMovement() {
         }
 
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 3) {
-            shakeGameContainer()
-            player.hasKey = true;
+            if (player.hasTimeGain) {
+                shakeGameContainer()
+                player.hasKey = true;
+            }
+        }
+
+
+        if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 4) {
+            if (time >= 100.200) {
+                time = 100.000;
+            } else {
+                time += 0.010;
+            }
         }
     });
 
@@ -249,6 +271,11 @@ function update() {
                 player.hasKey = false
                 player.timePassed = true
             }
+
+            if (time >= 100) {
+                player.hasTimeGain = true
+            }
+
         } else {
             time = winTime
             document.getElementById('time').innerText = time.toFixed(3);

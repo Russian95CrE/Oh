@@ -1,8 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-const params = new URLSearchParams(window.location.search);
-
 // Reality check for programmers =D
 let total_hours_wasted_here = 1;
 
@@ -13,7 +11,7 @@ let player = {
     width: 22,
     height: 40,
     speed: 5,
-    color: params.get('color'),
+    color: 'black',
     velocityX: 0,
     velocityY: 0,
     isJumping: false,
@@ -26,7 +24,28 @@ let player = {
     canMoveX: true,
     canMoveY: true,
     timePassed: false
-}
+};
+
+let player2 = {
+    x: 20,
+    y: 520,
+    width: 22,
+    height: 40,
+    speed: 5,
+    color: 'cyan',
+    velocityX: 0,
+    velocityY: 0,
+    isJumping: false,
+    gravity: 0.5,
+    friction: 0.7,
+    jumpStrength: -10,
+    grounded: false,
+    hasKey: false,
+    alerted: false,
+    canMoveX: true,
+    canMoveY: true,
+    timePassed: false
+};
 
 // Game variables
 let keys = {};
@@ -40,27 +59,22 @@ var shake = new Audio('resource/shake.wav');
 var door_sound = new Audio('resource/door.wav');
 
 // Define the level as a grid (2D array) of tiles
-
-// 1 - Wall
-// 2 - Door
-// 3 - Key
-
 const level = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] // Ground row
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]  // Ground row
 ];
 
 // Function to generate platforms from the level array
@@ -103,35 +117,39 @@ function drawPlatforms() {
     }
 }
 
-// Draw player
+// Add a draw function for both players
 function drawPlayer() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y, player.width, player.height);
 }
+function drawPlayer2() {
+    ctx.fillStyle = player2.color;
+    ctx.fillRect(player2.x, player2.y, player2.width, player2.height);
+}
+
+
 
 // Handle player movement
+// Handle player movement
+// Handle player movement
 function handleMovement() {
-
+    // Player 1 Movement
     if (player.canMoveX) {
-        // Apply horizontal movement
         if (keys['ArrowRight']) {
             player.velocityX = player.speed;
         } else if (keys['ArrowLeft']) {
             player.velocityX = -player.speed;
         } else {
-            player.velocityX *= player.friction; // Slow down due to friction
+            player.velocityX *= player.friction;  // Apply friction
         }
     }
 
-
-    // Apply gravity
+    // Apply gravity for Player 1
     player.velocityY += player.gravity;
-
-    // Move player
     player.x += player.velocityX;
     player.y += player.velocityY;
 
-    // Prevent player from leaving the canvas horizontally
+    // Prevent Player 1 from leaving the canvas horizontally
     if (player.x <= 0) {
         player.x = 0;
     }
@@ -139,7 +157,69 @@ function handleMovement() {
         player.x = canvas.width - player.width;
     }
 
-    // Check for collision with platforms
+    // Check for collision with platforms (already exists for Player 1)
+    checkCollisions(player);
+
+    // Player 1 Jumping Logic (updated)
+    if (keys['ArrowUp'] && !player.isJumping && player.grounded) {
+        player.velocityY = player.jumpStrength;
+        jump.play();
+        player.isJumping = true;
+    }
+
+    // Prevent Player 1 from falling below the canvas
+    if (player.y + player.height >= canvas.height) {
+        player.y = canvas.height - player.height;
+        player.velocityY = 0;
+        player.grounded = true;
+        player.isJumping = false;
+    }
+
+    // Player 2 Movement
+    if (player2.canMoveX) {
+        if (keys['d']) {  // Right (WASD for Player 2)
+            player2.velocityX = player2.speed;
+        } else if (keys['a']) {  // Left
+            player2.velocityX = -player2.speed;
+        } else {
+            player2.velocityX *= player2.friction;  // Apply friction
+        }
+    }
+
+    // Apply gravity for Player 2
+    player2.velocityY += player2.gravity;
+    player2.x += player2.velocityX;
+    player2.y += player2.velocityY;
+
+    // Prevent Player 2 from leaving the canvas horizontally
+    if (player2.x <= 0) {
+        player2.x = 0;
+    }
+    if (player2.x + player2.width >= canvas.width) {
+        player2.x = canvas.width - player2.width;
+    }
+
+    // Check for collision with platforms (for Player 2)
+    checkCollisions(player2);
+
+    // Player 2 Jumping Logic (updated)
+    if (keys['w'] && !player2.isJumping && player2.grounded) {
+        player2.velocityY = player2.jumpStrength;
+        jump.play();
+        player2.isJumping = true;
+    }
+
+    // Prevent Player 2 from falling below the canvas
+    if (player2.y + player2.height >= canvas.height) {
+        player2.y = canvas.height - player2.height;
+        player2.velocityY = 0;
+        player2.grounded = true;
+        player2.isJumping = false;
+    }
+}
+
+// Check for key pickup and apply teamwork
+function checkCollisions(player) {
     player.grounded = false;
     platforms.forEach(platform => {
         const playerBottom = player.y + player.height;
@@ -160,19 +240,19 @@ function handleMovement() {
             // Check if collision is from the top of the platform
             if (collisionFromTop < Math.min(collisionFromLeft, collisionFromRight)) {
                 if (player.velocityY > 0) {
-                    player.y = platform.y - player.height; // Snap player to the top of the platform
-                    player.velocityY = 0; // Stop downward movement
-                    player.grounded = true; // Player is on a platform
-                    player.isJumping = false; // Allow jumping again
+                    player.y = platform.y - player.height;  // Snap player to platform
+                    player.velocityY = 0;  // Stop downward movement
+                    player.grounded = true;  // Player is grounded
+                    player.isJumping = false;  // Allow jumping again
                 }
             } else {
                 // Handle side collisions
                 if (collisionFromLeft < collisionFromRight) {
-                    player.x = platform.x - player.width; // Collide from the left
+                    player.x = platform.x - player.width;  // Collide from the left
                 } else {
-                    player.x = platformRight; // Collide from the right
+                    player.x = platformRight;  // Collide from the right
                 }
-                player.velocityX = 0; // Stop horizontal movement when colliding with sides
+                player.velocityX = 0;  // Stop horizontal movement when colliding with sides
             }
         }
 
@@ -183,8 +263,8 @@ function handleMovement() {
                     // Win the game
                     winTime = time;
                     door_sound.play();
-					alert('Great job! You unlocked the door with the key and won!');
-                    window.location.href = "Level02/index.html?color=" + player.color;
+                    alert('Great job! You unlocked the door with the key and won!');
+                    window.location.href = "Level02/index.html";
                     player.alerted = true; // Prevent further alerts
                 }
             } else {
@@ -192,12 +272,14 @@ function handleMovement() {
             }
         }
 
+        // Key pickup for both players
         if (level[Math.floor(player.y / tileSize)][Math.floor(player.x / tileSize)] === 3) {
-            shakeGameContainer()
+            shakeGameContainer();
             player.hasKey = true;
+            player2.hasKey = player.hasKey; // Teamwork: Player 2 gets the key as well
         }
     });
-
+}
     // Apply jumping
     if (keys['ArrowUp'] && !player.isJumping && player.grounded) {
         player.velocityY = player.jumpStrength; // Apply jump velocity
@@ -215,7 +297,6 @@ function handleMovement() {
         player.grounded = true;
         player.isJumping = false;
     }
-}
 
 // Function to shake the game container
 function shakeGameContainer() {
@@ -235,27 +316,29 @@ function shakeGameContainer() {
 function update() {
     if (!isPaused) {
         handleMovement();
-    
+        
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawPlatforms();
-        drawPlayer();
-
+        drawPlayer(); // Draw Player 1
+        drawPlayer2(); // Draw Player 2
+        
+        // Timer logic
         if (!player.alerted) {
             if (time > 0) {
                 time -= 0.016;
                 document.getElementById('time').innerText = time.toFixed(3);
             } else {
                 document.getElementById('time').innerText = '0.000';
-                player.hasKey = false
-                player.timePassed = true
+                player.hasKey = false;
+                player.timePassed = true;
             }
         } else {
-            time = winTime
+            time = winTime;
             document.getElementById('time').innerText = time.toFixed(3);
         }
-
     }
 }
+
 
 
 // Game loop
